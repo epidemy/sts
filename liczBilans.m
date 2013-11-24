@@ -10,7 +10,7 @@ o = 0.151;
 % stała boltzmanna w db
 K = -228.6;
 
-lambda = c/f
+lambda = c/f;
 
 lng_es = abs(lng-lng_sat);
 temp = cos(degtorad(lat)) * cos(degtorad(lng_es));
