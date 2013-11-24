@@ -1,13 +1,4 @@
 
-
-% prędkość światła
-c = 299792458
-% wysokosc orbity geo
-R0 = 35786e3
-% 
-o = 0.151
-% stała boltzmanna w db
-K = -228.6
 % Stacja A
 % Średnica anteny (m)
 D = 2
@@ -76,40 +67,14 @@ dost = 99.995
 %margines implmenetacyjny (dB)
 margin = 0.5
 
-lng_es = abs(lng_a-lng_sat)
-temp = cos(degtorad(lat_a)) * cos(degtorad(lng_es))
-beta = acos(temp)
+% Liczymy bilans w górę
 
-Pt = 10 * log10(P0_a)
-
-Gt = 10 * log10((pi^2 * D^2 * n)/(lambda_up^2))
-
-eirp_es = Pt + Gt % dB
-
-du = R0*sqrt(1+(0.4199*(1-cos(beta))))
-
-FSL_u = 20 * log10((4 * pi * du)/lambda_up)
-
-%kąt elewacji
-E = atan((cos(beta) - o)/sin(beta))
 % to należy odczytać z wykresu
 La = 0.15
-% wysokosc sciany deszczu (km)
-hr = 4 - (0.075 * (lat_a - 36))
-% droga sygnału przez deszcz (km)
-Ls = (hr-(h_a*1e-3))/sin(E)
-% stała redukcji
-T001 = 90/(90+4*Ls*cos(E))
 
-Le=T001 * Ls
 % z wykresu (dB/km)
 gammaR=1.8
 
-A001 = gammaR * Le
+bilans_up = liczBilans(lng_a,lat_a, lng_sat, P0_a, D, n, f_up, f_down, La, h_a, gammaR, dost, GT_sat)
 
-p=100-dost
-
-Ae = A001 * 0.12 * (p^(-(0.546+(0.043*log10(p)))))
-
-bilans_up = eirp_es - (FSL_u + La + Ae) + GT_sat - K
 
