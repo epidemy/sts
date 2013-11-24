@@ -16,7 +16,6 @@ CN0_total_a_lin = 10^(CN0_total_a/10)
 
 CN0_a_up_lin = 10^(CN0_a_up/10)
 
-
 CN0_down = 10*log10(1/(CN0_total_a_lin^-1 - CN0_a_up_lin^-1))
 
 GTes = CN0_down - bilans_down

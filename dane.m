@@ -49,9 +49,6 @@ f_down = 12.5e9;
 % częst uplink 
 f_up = 14e9;
 
-lambda_down = c/f_down;
-
-lambda_up = c/f_up;
 % długość geograficzna satelity: φ = 8 ˚  W
 lng_sat = convertToDecimal([-8,0,0]);
 EIRP_sat = 46;
@@ -72,14 +69,14 @@ dost = 99.995;
 %margines implmenetacyjny (dB)
 margin = 0.5;
 
-
+% dla stacji A:
 % to należy odczytać z wykresu
 La = 0.15;
 
 % z wykresu (dB/km)
 gammaR=1.8;
 
-
+% dla stacji B:
 % to należy odczytać z wykresu
 La_b = 0.1;
 
