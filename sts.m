@@ -56,11 +56,14 @@ lambda_up = c/f_up
 lng_sat = convertToDecimal([-8,0,0])
 
 %Parametry transmisji
-%Przepływność (Mbps)
-Rb = 20 
+%Przepływność 
+Rb = 20e6
 %elementowa stopa błędow
 BER = 1e-6
-
+% Częstotliwość transpondera?
+B = 36e6
+% kod korekcyjny
+kod_korekc = 4.5
 %Inne
 %Dostępność systemu (%)
 dost = 99.995
@@ -75,6 +78,28 @@ La = 0.15
 % z wykresu (dB/km)
 gammaR=1.8
 
-bilans_up = liczBilans(lng_a,lat_a, lng_sat, P0_a, D, n, f_up, f_down, La, h_a, gammaR, dost, GT_sat)
+CN0_up = liczBilans(lng_a,lat_a, lng_sat, P0_a, D, n, f_up, La, h_a, gammaR, dost, GT_sat, 0, 0)
 
+% to należy odczytać z wykresu
+La_b = 0.1
 
+% to należy odczytać z wykresu
+gammaR_b = 1.9
+
+EIRP_sat = 46
+OBO = 2.5
+
+% tu brakuje jeszcze GTes
+bilans_down = liczBilans(lng_b, lat_b, lng_sat, P0_a, D, n, f_down, La_b, h_b, gammaR_b, dost, 0, EIRP_sat, OBO)
+
+kod_ilosc_stanow = 2^(ceil(Rb/B))
+
+EbN0 = 10*log10(erfcinv(2*BER)^2)
+
+CN0_total = EbN0 + 10 * log10(Rb) - kod_korekc + margin
+
+CN0_total_lin = 10^(CN0_total/10)
+
+CN0_up_lin = 10^(CN0_up/10)
+
+CN0_down = 10*log10(1/(CN0_total_lin^-1 - CN0_up_lin^-1))
